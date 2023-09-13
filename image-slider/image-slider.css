@@ -1,0 +1,108 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-slider-container {
+  --image-width: 300px;
+  --transition-duration: 500ms;
+  --transition-timing: ease-in-out;
+  --dot-btn-transition-duration: 150ms;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0;
+  width: 100vw;
+  width: 100dvw;
+  height: 40vh;
+}
+
+.image-slider-container-inner {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32vh;
+  width: 100%;
+}
+
+.dot-btn-container {
+  background: hsla(0, 0%, 70%, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 9999px;
+}
+
+.dot-btn {
+  height: 15px;
+  width: 15px;
+  border-radius: 7.5px;
+  border: 2px solid black;
+  scale: 1;
+  cursor: pointer;
+  transition: box-shadow var(--dot-btn-transition-duration) var(--transition-timing),
+              scale var(--dot-btn-transition-duration) var(--transition-timing);
+  margin: 0 0.5rem;
+}
+
+.dot-btn:hover {
+  scale: 1.2;
+  box-shadow: 0 2px 4px hsla(0, 0%, 70%, 0.3);
+}
+
+.dot-btn.active {
+  box-shadow: inset 0 0 5px black;
+}
+
+.slider-img {
+  position: absolute;
+  object-fit: cover;
+  height: 100%;
+  max-width: var(--image-width);
+  border-radius: 1rem;
+
+  opacity: 1;
+  scale: 1;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: scale var(--transition-duration) var(--transition-timing),
+              opacity var(--transition-duration) var(--transition-timing),
+              left var(--transition-duration) var(--transition-timing);
+}
+
+.slider-img.hide-left {
+  position: absolute;
+  opacity: 0.5;
+  z-index: -1;
+  scale: 0.7;
+  left: calc(50% - var(--image-width) - 1rem);
+  top: 0;
+}
+
+.slider-img.hide-right {
+  position: absolute;
+  opacity: 0.5;
+  z-index: -1;
+  scale: 0.7;
+  left: calc(50% + var(--image-width) - calc(var(--image-width) / 3) + 2rem);
+  top: 0;
+}
+
+.slider-img.hide-behind {
+  position: absolute;
+  z-index: -2;
+  opacity: 0;
+  scale: 0;
+  left: 40%;
+  top: 0;
+}
+
+
+
