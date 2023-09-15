@@ -24,34 +24,97 @@
 }
 
 .sign-up-form {
-  --input-hue: 0;
+  --base-input-hue: 0;
 
   background: hsla(0, 10%, 80%, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 4rem 4rem 4rem;
+
+  border-radius: 2rem;
+  box-shadow: 0 0 10px hsla(0, 10%, 30%, 0.9);
+}
+
+.sign-up-form > fieldset {
+  font-size: clamp(18px, calc(1.7rem + 0.3vw), 26px);
+  padding: 2rem 8rem 3rem 8rem;
+  border: 2px solid hsla(0, 10%, 30%, 0.9);
+  border-radius: 2rem; 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 5rem 10rem;
-
-  width: 80vw;
-  height: 90vh;
-  border-radius: 12.5% / 25%;
-  gap: 1rem;
-  box-shadow: 0 0 10px hsla(0, 10%, 30%, 0.9);
+  gap: 3rem;
 }
 
-.sign-up-form > .form-input-container {
+.sign-up-form > fieldset > .form-input-container {
+  --hint-timing-func: ease-in-out;
+  --hint-trans-duration: 300ms;
+
+  position: relative;
   width: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
+input:focus {
+  outline: none;
+}
+
 .sign-up-form input {
   appearance: none;
   border-radius: 1rem;
-  padding: 1rem 2rem;
-  border: 2px solid hsla(var(--input-hue), 70%, 70%, 0.6);
-  box-shadow: inset 0 0 5px hsla(var(--input-hue), 70%, 70%, 0.6),
-              0 0 5px hsla(var(--input-hue), 10%, 30%, 0.9);
+  padding: 2rem 2rem 1rem 2rem;
+  border: 2px solid hsla(var(--base-input-hue), 70%, 70%, 0.6);
+  box-shadow: inset 0 2px 5px hsla(var(--base-input-hue), 70%, 70%, 0.6),
+}
+
+.input-hint,
+.input-hint-bg {
+  font-size: clamp(16px, calc(1.5rem + 0.3vw), 24px);
+  position: absolute;
+  width: 200px;
+  height: 26px;
+  top: 2rem;
+  left: 1.5rem;
+  padding: 0rem 1rem;
+  border-radius: 9999px;
+}
+
+.input-hint {
+  z-index: 2;
+  background: white;
+  transition: top var(--hint-trans-duration) var(--hint-timing-func),
+              left var(--hint-trans-duration) var(--hint-timing-func);
+}
+
+.input-hint-bg {
+  z-index: 1;
+  background-image: linear-gradient(0deg, white 50%, hsla(0, 70%, 70%, 0.7) 50%);
+  box-shadow: inset 0 0 4px white;
+  opacity: 0;
+ 
+  transition: opacity var(--hint-trans-duration) var(--hint-timing-func),
+              top var(--hint-trans-duration) var(--hint-timing-func),
+              left var(--hint-trans-duration) var(--hint-timing-func);
+}
+
+.form-input-container:focus-visible .input-hint,
+.form-input-container:hover .input-hint {
+  top: -0.9rem;
+  left: 1.5rem;
+}
+
+.form-input-container:focus-visible .input-hint-bg,
+.form-input-container:hover .input-hint-bg {
+  opacity: 1;
+  width: 204px;
+  top: -1.1rem;
+  left: 1.35rem;
+}
+
+.error {
+  background: hsla(var(--base-input-hue), 70%, 70%, 0.6);
 }
