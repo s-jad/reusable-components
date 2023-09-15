@@ -25,6 +25,10 @@
 
 .sign-up-form {
   --base-input-hue: 0;
+  --base-input-sat: 20%;
+  --base-input-lightness: 40%;
+  --valid-input: hsla(110, 50%, 50%, 0.8);
+  --invalid-input: hsla(0, 50%, 50%, 0.8);
 
   background: hsla(0, 10%, 80%, 0.3);
   display: flex;
@@ -39,7 +43,7 @@
 .sign-up-form > fieldset {
   font-size: clamp(18px, calc(1.7rem + 0.3vw), 26px);
   padding: 2rem 8rem 3rem 8rem;
-  border: 2px solid hsla(0, 10%, 30%, 0.9);
+  border: 2px solid hsla(0, 10%, 30%, 0.7);
   border-radius: 2rem; 
   display: flex;
   flex-direction: column;
@@ -48,7 +52,7 @@
   gap: 3rem;
 }
 
-.sign-up-form > fieldset > .form-input-container {
+.sign-up-form .form-input-container {
   --hint-timing-func: ease-in-out;
   --hint-trans-duration: 300ms;
 
@@ -67,8 +71,11 @@ input:focus {
   appearance: none;
   border-radius: 1rem;
   padding: 2rem 2rem 1rem 2rem;
-  border: 2px solid hsla(var(--base-input-hue), 70%, 70%, 0.6);
-  box-shadow: inset 0 2px 5px hsla(var(--base-input-hue), 70%, 70%, 0.6),
+  border: 2px solid hsla(var(--base-input-hue), var(--base-input-sat), var(--base-input-lightness), 0.6);
+  box-shadow: inset 0 0px 2px hsla(var(--base-input-hue), var(--base-input-sat), var(--base-input-lightness), 0.6);
+
+  transition: border var(--hint-trans-duration) var(--hint-timing-func),
+              box-shadow var(--hint-trans-duration) var(--hint-timing-func);
 }
 
 .input-hint,
@@ -86,35 +93,51 @@ input:focus {
 .input-hint {
   z-index: 2;
   background: white;
-  transition: top var(--hint-trans-duration) var(--hint-timing-func),
+  transition: color var(--hint-trans-duration) var(--hint-timing-func),
+              top var(--hint-trans-duration) var(--hint-timing-func),
               left var(--hint-trans-duration) var(--hint-timing-func);
 }
 
 .input-hint-bg {
   z-index: 1;
-  background-image: linear-gradient(0deg, white 50%, hsla(0, 70%, 70%, 0.7) 50%);
+  background-image: linear-gradient(0deg, white 50%, hsla(0, var(--base-input-sat), var(--base-input-lightness), 0.7) 50%);
   box-shadow: inset 0 0 4px white;
   opacity: 0;
  
-  transition: opacity var(--hint-trans-duration) var(--hint-timing-func),
+  transition: background-image var(--hint-trans-duration) var(--hint-timing-func),
+              opacity var(--hint-trans-duration) 100ms var(--hint-timing-func),
               top var(--hint-trans-duration) var(--hint-timing-func),
               left var(--hint-trans-duration) var(--hint-timing-func);
 }
 
-.form-input-container:focus-visible .input-hint,
+.form-input-container:focus-within .input-hint,
 .form-input-container:hover .input-hint {
+  color: hsla(0, 0%, 0%, 0.5);
   top: -0.9rem;
   left: 1.5rem;
 }
 
-.form-input-container:focus-visible .input-hint-bg,
+input:not(:placeholder-shown):valid ~ .input-hint {
+  color: var(--valid-input); 
+  top: -0.9rem;
+  left: 1.5rem;
+}
+
+input:not(:placeholder-shown):invalid ~ .input-hint {
+  color: var(--invalid-input);
+  top: -0.9rem;
+  left: 1.5rem;
+}
+
+input:not(:placeholder-shown) ~ .input-hint-bg,
+.form-input-container:focus-within .input-hint-bg,
 .form-input-container:hover .input-hint-bg {
   opacity: 1;
   width: 204px;
   top: -1.1rem;
-  left: 1.35rem;
+  left: 1.33rem;
 }
 
 .error {
-  background: hsla(var(--base-input-hue), 70%, 70%, 0.6);
+  background: hsla(var(--base-input-hue), var(--base-input-sat), var(--base-input-lightness), 0.6);
 }
