@@ -32,24 +32,21 @@
 
   background: hsla(0, 10%, 80%, 0.3);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2.5rem 4rem 4rem 4rem;
-
-  border-radius: 2rem;
-  box-shadow: 0 0 10px hsla(0, 10%, 30%, 0.9);
-}
-
-.sign-up-form > fieldset {
-  font-size: clamp(18px, calc(1.7rem + 0.3vw), 26px);
-  padding: 2rem 8rem 3rem 8rem;
-  border: 2px solid hsla(0, 10%, 30%, 0.7);
-  border-radius: 2rem; 
-  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 3rem;
+  padding: 2rem;
+  width: 80vw;
+  border-radius: 2rem;
+  box-shadow: 0 0 10px hsla(0, 10%, 30%, 0.9);
+  height: 90vh;
+}
+
+@media (max-width: 600px) {
+ .sign-up-form {
+   width: 98%;
+ }
 }
 
 .sign-up-form .form-input-container {
@@ -57,7 +54,6 @@
   --hint-trans-duration: 300ms;
 
   position: relative;
-  width: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -85,7 +81,7 @@ input:focus {
   width: 200px;
   height: 26px;
   top: 2rem;
-  left: 1.5rem;
+  left: 2.1rem;
   padding: 0rem 1rem;
   border-radius: 9999px;
 }
@@ -114,19 +110,19 @@ input:focus {
 .form-input-container:hover .input-hint {
   color: hsla(0, 0%, 0%, 0.5);
   top: -0.9rem;
-  left: 1.5rem;
+  left: 2.1rem;
 }
 
 input:not(:placeholder-shown):valid ~ .input-hint {
   color: var(--valid-input); 
   top: -0.9rem;
-  left: 1.5rem;
+  left: 2.1rem;
 }
 
 input:not(:placeholder-shown):invalid ~ .input-hint {
   color: var(--invalid-input);
   top: -0.9rem;
-  left: 1.5rem;
+  left: 2.1rem;
 }
 
 input:not(:placeholder-shown) ~ .input-hint-bg,
@@ -135,9 +131,43 @@ input:not(:placeholder-shown) ~ .input-hint-bg,
   opacity: 1;
   width: 204px;
   top: -1.1rem;
-  left: 1.33rem;
+  left: 1.93rem;
 }
 
 .error {
-  background: hsla(var(--base-input-hue), var(--base-input-sat), var(--base-input-lightness), 0.6);
+  font-size: clamp(16px, calc(1.5rem + 0.3vw), 24px);
+  position: absolute;
+  cursor: pointer;
+  opacity: 0;
+  max-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inset: 0;
+  top: -1.1rem;
+  z-index: 10;
+  
+  transition: opacity var(--hint-trans-duration) ease-in
+              max-height var(--hint-trans-duration) 200ms ease-in;
+
+}
+
+.error.active {
+  background: hsla(0, var(--base-input-sat), 90%, 1);
+  border: 2px solid var(--invalid-input);
+  padding: 0rem 1rem;
+  opacity: 1;
+  border-radius: 1rem;
+  text-align: center;
+  line-break: loose;
+  max-height: 80px;
+  max-width: 100%;
+}
+
+.submit-btn {
+  width: 15rem;
+  height: 4rem;
+  border-radius: 1rem;
+  border: 2px solid hsla(0, 10%, 30%, 0.9);
+  box-shadow: 0 2px 3px hsla(0, 10%, 30%, 0.9);
 }
