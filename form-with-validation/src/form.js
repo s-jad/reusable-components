@@ -34,7 +34,6 @@ function checkAge() {
 function checkEmail() {
   const emailInput = d.body.querySelector('#mail');
   const emailError = d.body.querySelector('#mail ~ .error');
-  const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   if (emailInput.validity.valueMissing) {
     emailError.textContent = "Please enter a valid email address";
@@ -50,7 +49,7 @@ function checkEmail() {
       emailError.className = "error";
     }, 2500);
     return false;
-  } else if (!regex.test(emailInput)) {
+  } else if (emailInput.validity.typeMismatch) {
     emailError.textContent = `${emailInput.value} is not a valid email`;
     emailError.className = "error active";
     setTimeout(() => {
@@ -65,26 +64,26 @@ function checkEmail() {
 function checkPassword() {
   const passwordInput = d.body.querySelector('#password');
   const confirmPasswordInput = d.body.querySelector('#confirm-password');
-  const passwordError = d.body.querySelector('#password ~ .error');
+  const confirmPasswordError = d.body.querySelector('#confirm-password ~ .error');
   const inputHint = d.body.querySelector('#password ~ .input-hint');
   const confirmInputHint = d.body.querySelector('#confirm-password ~ .input-hint');
 
   if (passwordInput.validity.tooShort) {
-    passwordError.textContent = `Minimum password length: ${passwordInput.minLength}`;
-    passwordError.className = "error active";
+    confirmPasswordError.textContent = `Minimum password length: ${passwordInput.minLength}`;
+    confirmPasswordError.className = "error active";
     setTimeout(() => {
-      passwordError.className = "error";
+      confirmPasswordError.className = "error";
     }, 2500);
     return false;
   }
 
   if (passwordInput.value !== confirmPasswordInput.value) {
-    passwordError.textContent = "Passwords must match";
-    passwordError.className = "error active";
+    confirmPasswordError.textContent = "Passwords must match";
+    confirmPasswordError.className = "error active";
     inputHint.style.color = "hsla(0, 50%, 50%, 0.8)";
     confirmInputHint.style.color = "hsla(0, 50%, 50%, 0.8)";
     setTimeout(() => {
-      passwordError.className = "error";
+      confirmPasswordError.className = "error";
     }, 2500);
     return false;
   } else {
