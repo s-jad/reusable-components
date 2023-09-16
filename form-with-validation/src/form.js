@@ -6,24 +6,28 @@ function checkAge() {
   const ageError = d.body.querySelector('#age ~ .error');
 
   if (parseInt(ageInput.value, 10) < parseInt(ageInput.min, 10)) {
-    ageError.textContent = "You must be over 18";
-    ageError.className = "error active";
+    ageError.textContent = 'You must be over 18';
+    ageError.className = 'error active';
     setTimeout(() => {
-      ageError.className = "error";
+      ageError.className = 'error';
     }, 2500);
     return false;
-  } else if (parseInt(ageInput.value, 10) > parseInt(ageInput.max, 10)) {
-    ageError.textContent = "Max age = 122";
-    ageError.className = "error active";
+  }
+
+  if (parseInt(ageInput.value, 10) > parseInt(ageInput.max, 10)) {
+    ageError.textContent = 'Max age = 122';
+    ageError.className = 'error active';
     setTimeout(() => {
-      ageError.className = "error";
+      ageError.className = 'error';
     }, 2500);
     return false;
-  } else if (ageInput.value === "") {
-    ageError.textContent = "Please enter a valid number";
-    ageError.className = "error active";
+  }
+
+  if (ageInput.value === '') {
+    ageError.textContent = 'Please enter a valid number';
+    ageError.className = 'error active';
     setTimeout(() => {
-      ageError.className = "error";
+      ageError.className = 'error';
     }, 2500);
     return false;
   }
@@ -36,24 +40,28 @@ function checkEmail() {
   const emailError = d.body.querySelector('#mail ~ .error');
 
   if (emailInput.validity.valueMissing) {
-    emailError.textContent = "Please enter a valid email address";
-    emailError.className = "error active";
+    emailError.textContent = 'Please enter a valid email address';
+    emailError.className = 'error active';
     setTimeout(() => {
-      emailError.className = "error";
+      emailError.className = 'error';
     }, 2500);
     return false;
-  } else if (emailInput.validity.tooShort) {
+  }
+
+  if (emailInput.validity.tooShort) {
     emailError.textContent = `Minimum email length: ${emailInput.minLength}`;
-    emailError.className = "error active";
+    emailError.className = 'error active';
     setTimeout(() => {
-      emailError.className = "error";
+      emailError.className = 'error';
     }, 2500);
     return false;
-  } else if (emailInput.validity.typeMismatch) {
+  }
+
+  if (emailInput.validity.typeMismatch) {
     emailError.textContent = `${emailInput.value} is not a valid email`;
-    emailError.className = "error active";
+    emailError.className = 'error active';
     setTimeout(() => {
-      emailError.className = "error";
+      emailError.className = 'error';
     }, 2500);
     return false;
   }
@@ -70,26 +78,25 @@ function checkPassword() {
 
   if (passwordInput.validity.tooShort) {
     confirmPasswordError.textContent = `Minimum password length: ${passwordInput.minLength}`;
-    confirmPasswordError.className = "error active";
+    confirmPasswordError.className = 'error active';
     setTimeout(() => {
-      confirmPasswordError.className = "error";
+      confirmPasswordError.className = 'error';
     }, 2500);
     return false;
   }
 
   if (passwordInput.value !== confirmPasswordInput.value) {
-    confirmPasswordError.textContent = "Passwords must match";
-    confirmPasswordError.className = "error active";
-    inputHint.style.color = "hsla(0, 50%, 50%, 0.8)";
-    confirmInputHint.style.color = "hsla(0, 50%, 50%, 0.8)";
+    confirmPasswordError.textContent = 'Passwords must match';
+    confirmPasswordError.className = 'error active';
+    inputHint.style.color = 'hsla(0, 50%, 50%, 0.8)';
+    confirmInputHint.style.color = 'hsla(0, 50%, 50%, 0.8)';
     setTimeout(() => {
-      confirmPasswordError.className = "error";
+      confirmPasswordError.className = 'error';
     }, 2500);
     return false;
-  } else {
-    inputHint.style.color = "hsla(110, 50%, 50%, 0.8)";
-    confirmInputHint.style.color = "hsla(110, 50%, 50%, 0.8)";
   }
+  inputHint.style.color = 'hsla(110, 50%, 50%, 0.8)';
+  confirmInputHint.style.color = 'hsla(110, 50%, 50%, 0.8)';
 
   return true;
 }
@@ -98,13 +105,20 @@ function checkName() {
   const nameInput = d.body.querySelector('#name');
   const nameError = d.body.querySelector('#name ~ .error');
 
-  const regex = /^[a-zA-Z\s]+$/;
-
-  if (!regex.test(nameInput.value)) {
-    nameError.textContent = "Your name may contain letters only.";
-    nameError.className = "error active";
+  if (nameInput.value === '') {
+    nameError.textContent = 'A name is required.';
+    nameError.className = 'error active';
     setTimeout(() => {
-      nameError.className = "error";
+      nameError.className = 'error';
+    }, 2500);
+    return false;
+  }
+
+  if (nameInput.validity.patternMismatch) {
+    nameError.textContent = 'Your name may contain letters only.';
+    nameError.className = 'error active';
+    setTimeout(() => {
+      nameError.className = 'error';
     }, 2500);
     return false;
   }
@@ -116,13 +130,13 @@ export default function SignUpForm() {
   const form = d.createElement('form');
   form.classList.add('sign-up-form');
   form.noValidate = true;
-  form.method = "POST";
-  form.action = "submit";
+  form.method = 'POST';
+  form.action = 'submit';
 
   form.innerHTML = `
       <div class="form-input-container">
         <label for="name">
-          <input type="text" id="name" name="name" required maxlength="30" placeholder=""/>
+          <input type="text" id="name" name="name" required maxlength="40" pattern="^[a-zA-Z\s]+$" placeholder=""/>
           <div class="input-hint-bg">Name:</div>
           <div class="input-hint">Name:</div>
           <div class="error" aria-live="polite"></div>
@@ -150,7 +164,7 @@ export default function SignUpForm() {
           <div class="input-hint-bg">Password:</div>
           <div class="input-hint">Password:</div>
           <div class="error" aria-live="polite"></div>
-        </label>
+                        </label>
       </div>       
        <div class="form-input-container">
         <label for="confirm-password">
@@ -165,7 +179,6 @@ export default function SignUpForm() {
 
   const name = form.querySelector('#name');
   name.addEventListener(('blur'), () => {
-
     inputsAreValid[0] = checkName();
   });
 
@@ -186,7 +199,7 @@ export default function SignUpForm() {
 
   form.addEventListener(('submit'), (ev) => {
     if (inputsAreValid.some((input) => input === false)) {
-      ev.preventDefault;
+      ev.preventDefault();
     }
   });
 
